@@ -13,10 +13,8 @@ function help {
     echo " "
 }
 
-if [ `grep -c '^docker:' /etc/passwd` -eq 0 ]; then
-    if [ $USER_UID -ne 0 ]; then
-        useradd -u $USER_UID docker --create-home
-    fi
+if [ $USER_UID -ne 0 ]; then
+    usermod -u $USER_UID docker
 fi
 
 if [ $USER_UID -eq 0 ]; then
