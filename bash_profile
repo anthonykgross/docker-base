@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export USER_UID=$(stat -c "%u" .)
-export USER_GID=$(stat -c "%g" .)
 
 echo "Starting with : $(id)"
 
@@ -16,7 +15,7 @@ function help {
 
 if [ `grep -c '^docker:' /etc/passwd` -eq 0 ]; then
     if [ $USER_UID -ne 0 ]; then
-        useradd -u $USER_UID -g $USER_GID docker
+        useradd -u $USER_UID docker --create-home
     fi
 fi
 
