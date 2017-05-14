@@ -17,10 +17,5 @@ RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364
 RUN rm -rf /var/lib/apt/lists/* && apt-get autoremove -y --purge
 
 ADD bash_profile /root/.bash_profile
-ADD entrypoint.sh /base-entrypoint.sh
 
-RUN chmod +x /base-entrypoint.sh && \
-    echo "\nsource ~/.bash_profile" >> /root/.bashrc
-
-ENTRYPOINT ["/base-entrypoint.sh"]
-CMD ["bash"]
+RUN echo "\nsource ~/.bash_profile" >> /root/.bashrc
