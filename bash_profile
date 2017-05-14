@@ -19,7 +19,7 @@ if [ `grep -c '^docker:' /etc/passwd` -eq 0 ]; then
     fi
 fi
 
-if [ $USER_UID -eq 0 ]; then
+if [ $(id -u) -eq 0 ]; then
     echo "You're root ! Use 'gosu' to change"
 fi
 
