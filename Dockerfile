@@ -18,4 +18,5 @@ RUN rm -rf /var/lib/apt/lists/* && apt-get autoremove -y --purge
 
 ADD bash_profile /root/.bash_profile
 
-RUN echo "\nsource ~/.bash_profile" >> /root/.bashrc
+RUN echo "\nsource ~/.bash_profile" >> /root/.bashrc && \
+    useradd -u 1000 docker --create-home
