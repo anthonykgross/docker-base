@@ -14,9 +14,11 @@ RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364
     && rm /usr/local/bin/gosu.asc \
     && chmod +x /usr/local/bin/gosu
 
-RUN rm -rf /var/lib/apt/lists/* && apt-get autoremove -y --purge
-
-ADD bash_profile /root/.bash_profile
-
-RUN echo "\nsource ~/.bash_profile" >> /root/.bashrc && \
+RUN rm -rf /var/lib/apt/lists/* && apt-get autoremove -y --purge && \
     useradd -u 1000 docker --create-home
+
+ADD bash_profile /home/docker/.bash_profile
+
+RUN ln -s /home/docker/.bash_profile /root/.bash_profile && \
+    echo "\nsource ~/.bash_profile" >> /root/.bashrc && \
+    echo "\nsource ~/.bash_profile" >> /home/docker/.bashrc
