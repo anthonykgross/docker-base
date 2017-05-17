@@ -1,9 +1,13 @@
 #!/bin/bash
 
-export USER_UID=$(stat -c "%u" .)
+export VOLUME_USER_UID=$(stat -c "%u" .)
+export VOLUME_USER_GID=$(stat -c "%g" .)
 
-echo "Starting with : $(id)"
+export USER_UID=$(id -u)
+export USER_GID=$(id -g)
 
+echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+echo "User      : $(id)"
 
 function help {
     echo " "
@@ -13,12 +17,32 @@ function help {
     echo " "
 }
 
-if [ $USER_UID -ne 0 ]; then
-    usermod -u $USER_UID docker
+function isRoot {
+    if [ $1 -eq 0 ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function groupname {
+    getent group $1 | cut -d: -f1
+}
+
+if ! isRoot $VOLUME_USER_UID ; then
+    if [ $(id -u docker) -ne $VOLUME_USER_UID ]; then
+        usermod -u $VOLUME_USER_UID docker
+    fi
+    echo "Workspace : uid=$VOLUME_USER_UID(docker) gid=$VOLUME_USER_GID(`groupname $VOLUME_USER_GID`)"
+else
+    echo "Workspace : uid=$VOLUME_USER_UID(root) gid=$VOLUME_USER_GID(`groupname $VOLUME_USER_GID`)"
 fi
 
-if [ $(id -u) -eq 0 ]; then
-    echo "You're root ! Use 'gosu' to change"
+if isRoot $USER_UID; then
+    echo ""
+    echo "[ WARNING ] You're root ! Use 'gosu' to change"
 fi
 
-echo "Use 'help' to know more about this image"
+echo ""
+echo "Documentation : https://github.com/anthonykgross/docker-base/tree/master"
+echo "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
