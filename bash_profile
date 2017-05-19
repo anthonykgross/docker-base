@@ -33,6 +33,9 @@ if ! isRoot $VOLUME_USER_UID ; then
     if [ $(id -u docker) -ne $VOLUME_USER_UID ]; then
         usermod -u $VOLUME_USER_UID docker
     fi
+    if [ $(id -g docker) -ne $VOLUME_USER_GID ]; then
+        usermod -g $VOLUME_USER_GID docker
+    fi
     echo "Workspace : uid=$VOLUME_USER_UID(docker) gid=$VOLUME_USER_GID(`groupname $VOLUME_USER_GID`)"
 else
     echo "Workspace : uid=$VOLUME_USER_UID(root) gid=$VOLUME_USER_GID(`groupname $VOLUME_USER_GID`)"

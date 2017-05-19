@@ -22,3 +22,5 @@ ADD bash_profile /home/docker/.bash_profile
 RUN ln -s /home/docker/.bash_profile /root/.bash_profile && \
     echo "\nsource ~/.bash_profile" >> /root/.bashrc && \
     echo "\nsource ~/.bash_profile" >> /home/docker/.bashrc
+
+WORKDIR /src
