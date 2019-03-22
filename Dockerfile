@@ -1,13 +1,13 @@
-FROM debian:jessie
+FROM ubuntu:18.04
 
 MAINTAINER Anthony K GROSS
 
 RUN apt-get update -y && \
 	apt-get upgrade -y && \
-	apt-get install -y curl ca-certificates
+	apt-get install -y curl ca-certificates gnupg2 apt-utils
 
 # Install Gosu
-RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
+RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
     curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture)" \
     && curl -o /usr/local/bin/gosu.asc -SL "https://github.com/tianon/gosu/releases/download/1.4/gosu-$(dpkg --print-architecture).asc" \
     && gpg --verify /usr/local/bin/gosu.asc \
