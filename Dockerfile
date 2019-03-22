@@ -4,7 +4,8 @@ MAINTAINER Anthony K GROSS
 
 RUN apt-get update -y && \
 	apt-get upgrade -y && \
-	apt-get install -y curl ca-certificates gnupg2 apt-utils
+	apt-get install -y curl ca-certificates gnupg2 apt-utils && \
+	echo "Europe/Paris" > /etc/timezone
 
 # Install Gosu
 RUN gpg --keyserver pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 && \
