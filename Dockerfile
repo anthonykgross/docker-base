@@ -6,7 +6,7 @@ ENV TZ=Europe/Paris
 
 RUN apt-get update -y && \
 	apt-get upgrade -y && \
-	apt-get install -y curl ca-certificates gnupg2 apt-utils python-software-properties && \
+	apt-get install -y curl ca-certificates gnupg2 apt-utils software-properties-common && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone
 
